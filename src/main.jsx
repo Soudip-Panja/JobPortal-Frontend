@@ -8,7 +8,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"
 
 import App from './App.jsx'
 import JobPost from './pages/JobPost.jsx';
-import JobDetails from './pages/jobDetails.jsx';
+import JobDetails from './pages/JobDetails.jsx';
+
 
 const router = createBrowserRouter([
   {
