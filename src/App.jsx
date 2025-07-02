@@ -17,7 +17,18 @@ export default function App() {
 
   const navigate = useNavigate();
 
-  console.log(data);
+  const handleDelete = async (id) => {
+    try {
+      await fetch(`https://job-portal-backend-delta.vercel.app/jobs/${id}`, {
+        method: "DELETE",
+      });
+      
+      window.location.reload();
+    } catch (error) {
+      console.error("Failed to delete job:", error);
+      alert("Failed to delete job.");
+    }
+  };
 
   return (
     <>
@@ -58,7 +69,12 @@ export default function App() {
                         See Details
                       </button>
 
-                      <button className="btn btn-danger w-50">Delete</button>
+                      <button
+                        className="btn btn-danger w-50"
+                        onClick={() => handleDelete(job._id)}
+                      >
+                        Delete
+                      </button>
                     </div>
                   </div>
                 </div>
