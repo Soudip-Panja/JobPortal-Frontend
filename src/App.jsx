@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import useFetch from "./useFetch";
 import Header from "./components/Header";
@@ -10,11 +12,6 @@ export default function App() {
   );
 
   const [searchTerm, setSearchTerm] = useState("");
-
-  const filteredJobs = data?.jobs?.filter((job) =>
-    job.jobTitle.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
   const navigate = useNavigate();
 
   const handleDelete = async (id) => {
@@ -23,12 +20,17 @@ export default function App() {
         method: "DELETE",
       });
 
-      window.location.reload();
+      toast.success("Job deleted successfully!");
+      setTimeout(() => window.location.reload(), 1500);
     } catch (error) {
       console.error("Failed to delete job:", error);
-      alert("Failed to delete job.");
+      toast.error("Failed to delete job.");
     }
   };
+
+  const filteredJobs = data?.jobs?.filter((job) =>
+    job.jobTitle.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <>
@@ -48,7 +50,7 @@ export default function App() {
         <div className="row">
           {filteredJobs?.length > 0 &&
             filteredJobs.map((job) => (
-              <div className="col-md-4 mb-4 d-felx" key={job._id}>
+              <div className="col-md-4 mb-4 d-flex" key={job._id}>
                 <div className="card w-100 h-100">
                   <div className="card-body">
                     <h2 className="card-title">{job.jobTitle}</h2>
@@ -68,7 +70,6 @@ export default function App() {
                       >
                         See Details
                       </button>
-
                       <button
                         className="btn btn-danger w-100"
                         onClick={() => handleDelete(job._id)}
@@ -82,6 +83,8 @@ export default function App() {
             ))}
         </div>
       </main>
+
+      <ToastContainer position="top-center" autoClose={1500} />
     </>
   );
 }
