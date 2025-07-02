@@ -22,7 +22,7 @@ export default function App() {
       await fetch(`https://job-portal-backend-delta.vercel.app/jobs/${id}`, {
         method: "DELETE",
       });
-      
+
       window.location.reload();
     } catch (error) {
       console.error("Failed to delete job:", error);
@@ -48,8 +48,8 @@ export default function App() {
         <div className="row">
           {filteredJobs?.length > 0 &&
             filteredJobs.map((job) => (
-              <div className="col-md-4 mb-4" key={job._id}>
-                <div className="card">
+              <div className="col-md-4 mb-4 d-felx" key={job._id}>
+                <div className="card w-100 h-100">
                   <div className="card-body">
                     <h2 className="card-title">{job.jobTitle}</h2>
                     <p className="card-text">
@@ -61,16 +61,16 @@ export default function App() {
                     <p className="card-text">
                       <strong>Job Type:</strong> {job.jobType}
                     </p>
-                    <div className="d-flex gap-1">
+                    <div className="d-flex flex-column flex-sm-row gap-1">
                       <button
-                        className="btn btn-primary w-50"
+                        className="btn btn-primary w-100"
                         onClick={() => navigate(`/${job._id}`)}
                       >
                         See Details
                       </button>
 
                       <button
-                        className="btn btn-danger w-50"
+                        className="btn btn-danger w-100"
                         onClick={() => handleDelete(job._id)}
                       >
                         Delete
