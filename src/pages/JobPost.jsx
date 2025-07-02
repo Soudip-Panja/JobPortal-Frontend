@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import Header from "../components/Header";
 
 export default function JobPost() {
@@ -11,8 +14,6 @@ export default function JobPost() {
     jobDescription: "",
     qualifications: "",
   });
-
-  const [successMessage, setSuccessMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,9 +45,7 @@ export default function JobPost() {
       const data = await response.json();
       console.log("Job posted successfully:", data);
 
-
-      setSuccessMessage("✅ Job posted successfully!");
-
+      toast.success("Job posted successfully!");
 
       setFormData({
         jobTitle: "",
@@ -59,6 +58,7 @@ export default function JobPost() {
       });
     } catch (error) {
       console.error("Error:", error.message);
+      toast.error("Failed to post job.");
     }
   };
 
@@ -173,9 +173,7 @@ export default function JobPost() {
           <button className="btn btn-primary">Post Job</button>
         </form>
 
-        {successMessage && (
-          <p className="mt-3 text-success fw-bold">{successMessage}</p>
-        )}
+        <ToastContainer position="top-center" autoClose={2000} />
       </main>
     </>
   );
